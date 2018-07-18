@@ -2,6 +2,7 @@
 
 si ()
 {
+	#check if the argument is an integer
 	if [[ "$1" =~ ^[0-9]+$ ]]
 	then 
 		echo integer
