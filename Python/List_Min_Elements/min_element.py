@@ -1,53 +1,61 @@
 #!/usr/bin/env python3
 
-def mainFunc():
-	"""
-	Args:
-	i - index value
-	l - list
-	Returns:
- 	New list
-	Rises errors:
-  	ValueError
-	"""
-
-	if l[i] < l[-i]:
-		for num in range(1, len(l)+1):
-			l[num-1] = l[i]	#set all the elements to the lowest value	
-		print(l)
-	else:
-		for num in range(1, len(l)+1):
-			l[num-1] = l[-i]
-		print(l)
-
-
 def initList():
 	while True:
 		try:
 			length = int(input('Enter list length: '))	
+			if length <= 0:
+				raise ValueError("Cannot be <0")
 			break
-		except ValueError:
-			print('Invalid input')
+		except ValueError as err:
+			print(err)
+		except TypeError as err:
+			print(err)
 	while True:
-		print('Type list values separated by space: ')
-		l = [int(x) for x in input().split()]
-		if length != len(l):
-			print('Wrong input')
-		else:
-			return l
-			break
+		try:
+			print('Type list values separated by space: ')
+			list_of_ints = [int(x) for x in input().split()]
+			if length != len(list_of_ints):
+				print('Wrong input')
+			else:	
+				return list_of_ints
+		except ValueError as err:
+			print(err)
 	
 
-def enterIndexForList(): #ask for index input
+def enterIndexForList(list_of_ints):
+	""" Get the index value from user.
+	Args:
+		list_of_ints - list of integers.
+	Returns:
+ 		The index to compare.
+	"""
 	while True:
-		index = int(input('Type an index value: '))
-		if index >= 0 and index <= len(l)-1:	
-			return index
-			break
-		else:
-			print('Index value is out of bounds')
+		try:
+			index = int(input('Type an index value: '))
+			if index >= 0 and index <= len(list_of_ints)-1:	
+				return index
+			else:
+				print('Index value is out of bounds')
+		except ValueError as err:
+			print(err)
+		except TypeError as err:
+			print(err)		
 
-l = initList()	
-i = enterIndexForList()
+def mainFunc():
+	"""Main function"""
+
+	list_of_ints = initList()	
+	index = enterIndexForList(list_of_ints)
+
+	if list_of_ints[index] < list_of_ints[-index]:
+		i = index
+	else:
+		i = -index
+
+	for num in range(1, len(list_of_ints)+1):
+		list_of_ints[num-1] = list_of_ints[i]	#set all the elements to the lowest value	
+	print(list_of_ints)
+
 
 mainFunc()
