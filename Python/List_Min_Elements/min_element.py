@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 
 def initList():
+	""" Get a value of the length and a list from user.
+	Args:
+		length - length of the list
+		list_of_ints - list of integers
+	Returns:
+		list of integers
+	"""
 	while True:
 		try:
 			length = int(input('Enter list length: '))	
@@ -54,7 +61,7 @@ def mainFunc():
 		i = -index
 
 	for num in range(1, len(list_of_ints)+1):
-		list_of_ints[num-1] = list_of_ints[i]	#set all the elements to the lowest value	
+		list_of_ints[num-1] = list_of_ints[i]		
 	print(list_of_ints)
 
 
