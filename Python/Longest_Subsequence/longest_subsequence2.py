@@ -5,6 +5,27 @@ start = time.time()
 
 import argparse
 
+def finding_words(word, S):
+	""" Takes a word from list and a string.
+	Args: 
+		matching_word - word that is being checked to find out if it is a subsequence of the given string
+		index - index of element of the given string
+	Returns:
+		matched word
+	"""
+
+	matching_word = ''
+	index = 0
+	for letter in word:
+		if S.find(letter, index) != -1:
+			matching_word += letter
+			index = S.find(letter, index) + 1
+		else:
+			matching_word = ''
+			break	
+	return matching_word
+
+ 
 def longest_match(D, S):
 	""" Takes a list of words and a string.
 	Args:
@@ -27,27 +48,7 @@ def longest_match(D, S):
 	else:
 		print('No matches.')
 
-
-def finding_words(word, S):
-	""" Takes a word from list and a string.
-	Args: 
-		matching_word - word that is being checked to find out if it is a subsequence of the given string
-		index - index of element of the given string
-	Returns:
-		matched word
-	"""
-
-	matching_word = ''
-	index = 0
-	for letter in word:
-		if S.find(letter, index) != -1:
-			matching_word += letter
-			index = S.find(letter, index) + 1
-		else:
-			matching_word = ''
-			break	
-	return matching_word
-        
+       
 def main():
 	"""Main function.
         Gets:
