@@ -11,7 +11,8 @@ class TestFindingWords(unittest.TestCase):
 		self.assertNotEqual(longest_subsequence2.finding_words('helloo', 'hello'), 'helloo')
 	
 	def test_longest_match(self):
-		self.assertEqual(longest_subsequence2.longest_match(['a', 'ab'], 'abc'), 'a')
+		self.assertEqual(longest_subsequence2.longest_match(['a', 'ab', 'abcd', 'ba', 'dbc'], 'abc'), 'ab')
+		self.assertEqual(longest_subsequence2.longest_match(['bale', 'dc'], 'abc'), 0)		
 
 if __name__ == '__main__':
 	unittest.main()
