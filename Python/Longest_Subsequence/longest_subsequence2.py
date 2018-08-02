@@ -45,8 +45,10 @@ def longest_match(D, S):
 	
 	if len(matching_words_list) !=0:
 		print(max(matching_words_list, key = len))
+		return max(matching_words_list, key = len)
 	else:
 		print('No matches.')
+		return 0
 
        
 def main():
