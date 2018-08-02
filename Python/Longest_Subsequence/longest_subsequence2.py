@@ -46,7 +46,7 @@ def finding_words(word, S):
 		else:
 			matching_word = ''
 			break	
-	return mtching_word
+	return matching_word
         
 def main():
 	"""Main function.
