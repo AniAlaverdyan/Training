@@ -7,3 +7,6 @@ Run longest_subsequence2.py file passing a string and a list arguments to it lik
 
 Example: 
 ./longest_subsequence2.py 'abppplee' -l 'able' 'ale' 'apple' 'bale' 'kangaroo'
+
+longest_subsequence2_test.py contains some test methods.
+In order to run it just type ./longest_subsequence2_test.py in command line.
