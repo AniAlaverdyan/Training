@@ -39,9 +39,12 @@ def longest_match(D, S):
 	matching_words_list = []
 
 	for word in D: 
-		a = finding_words(word, S)
-		if a != '':
-			matching_words_list.append(a)
+		if len(word) > len(S):
+			continue
+		else:
+			a = finding_words(word, S)
+			if a != '':
+				matching_words_list.append(a)
 	
 	
 	if len(matching_words_list) !=0:
