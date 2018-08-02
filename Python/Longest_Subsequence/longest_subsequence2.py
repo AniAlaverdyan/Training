@@ -16,14 +16,13 @@ def longest_match(D, S):
 
 	matching_words_list = []
 
-	for word in D: #list_of_words
+	for word in D: 
 		a = finding_words(word, S)
 		if finding_words(word, S) != '':
 			matching_words_list.append(finding_words(word, S))
 	
 	
 	if len(matching_words_list) !=0:
-		print(matching_words_list)
 		print(max(matching_words_list, key = len))
 	else:
 		print('No matches.')
@@ -40,7 +39,6 @@ def finding_words(word, S):
 
 	matching_word = ''
 	index = 0
-	#if index <= len(S)-1:
 	for letter in word:
 		if S.find(letter, index) != -1:
 			matching_word += letter
@@ -48,9 +46,16 @@ def finding_words(word, S):
 		else:
 			matching_word = ''
 			break	
-	return matching_word
+	return mtching_word
         
 def main():
+	"""Main function.
+        Gets:
+                a string and a list as command line arguments
+        Args: 
+                S - a string passed as an argument
+                D - a list passed as an argument
+        """
 	parser = argparse.ArgumentParser()
 	parser.add_argument('string')
 	parser.add_argument('-l', '--list', nargs = '+', required = True)
