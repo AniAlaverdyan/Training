@@ -17,9 +17,10 @@ def finding_words(word, S):
 	matching_word = ''
 	index = 0
 	for letter in word:
-		if S.find(letter, index) != -1:
+		find_result = S.find(letter, index)
+		if find_result != -1:
 			matching_word += letter
-			index = S.find(letter, index) + 1
+			index = find_result + 1
 		else:
 			matching_word = ''
 			break	
@@ -39,8 +40,8 @@ def longest_match(D, S):
 
 	for word in D: 
 		a = finding_words(word, S)
-		if finding_words(word, S) != '':
-			matching_words_list.append(finding_words(word, S))
+		if a != '':
+			matching_words_list.append(a)
 	
 	
 	if len(matching_words_list) !=0:
