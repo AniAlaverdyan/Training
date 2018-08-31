@@ -1,7 +1,6 @@
 #include <iostream>
+//#include "matrices.cpp"
 #include "matrices.h"
-#include "matrices.cpp"
-
 int main()
 {
     int rows;
