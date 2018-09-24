@@ -35,7 +35,8 @@ private:
 
     bool m_equalClicked;
     bool m_waitingForOperand;
-    bool m_waitingForOperator;
+    bool m_waitingForAddOperator;
+    bool m_waitingForMulOperator;
 
     int m_clickedValue;
 
@@ -46,7 +47,7 @@ private:
     Button *createButton(const QString &text, const char *member);
     void analysingString();
     void calculate();
-    void operatorClickedEvent();
+    void operatorClickedEvent(QString &m_clickedOperator);
     void containsEqualSign(QString &clickedOperator);
     void keyPressEvent(QKeyEvent *event);
     void buttonClicked(int &clickedValue);

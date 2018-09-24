@@ -21,7 +21,8 @@ Calc::Calc(QWidget *parent) :
                                                  "background: rgb(218, 212, 216); "
                                                  "min-height: 30; }");
     m_waitingForOperand = true;
-    m_waitingForOperator = true;
+    m_waitingForAddOperator = true;
+    m_waitingForMulOperator = true;
     m_equalClicked = false;
 
     for(int i = 0; i < numButtons; i++) {
@@ -86,12 +87,13 @@ void Calc::buttonClicked(int &m_clickedValue) {
     } else {
         expressionDisplay->setText(expressionDisplay->text() + QString::number(m_clickedValue));
     }
-    m_waitingForOperator = true;
+    m_waitingForAddOperator = true;
+    m_waitingForMulOperator = true;
 }
 
 
 void Calc::pointClicked() {
-    if(m_equalClicked || !m_waitingForOperator) {
+    if(m_equalClicked || (!m_waitingForAddOperator && !m_waitingForMulOperator)) {
         return;
     }
 
@@ -103,28 +105,24 @@ void Calc::pointClicked() {
 
 
 void Calc::operatorClicked() {
-    if(!m_waitingForOperator) {
-        return;
-    }
-
-
     Button *clickedButton = qobject_cast<Button *>(sender());
     m_clickedOperator = clickedButton->text();
-    containsEqualSign(m_clickedOperator);
-    m_waitingForOperand = true;
-    m_waitingForOperator = false;
+    operatorClickedEvent(m_clickedOperator);
 }
 
 
-void Calc::operatorClickedEvent() {
-    if(!m_waitingForOperator) {
+void Calc::operatorClickedEvent(QString &m_clickedOperator) {
+    if((m_clickedOperator == "*" || m_clickedOperator == "/") && !m_waitingForMulOperator) {
+        return;
+    }
+    if((m_clickedOperator == "+" || m_clickedOperator == "-") && !m_waitingForAddOperator) {
         return;
     }
     containsEqualSign(m_clickedOperator);
     m_waitingForOperand = true;
-    m_waitingForOperator = false;
+    m_waitingForAddOperator = false;
+    m_waitingForMulOperator = false;
 }
-
 
 void Calc::parenthesisClicked() {
     Button *clickedButton = qobject_cast<Button *>(sender());
@@ -135,11 +133,12 @@ void Calc::parenthesisClicked() {
     } else {
         expressionDisplay->setText(expressionDisplay->text() + clickedParenthesis);
     }
+    m_waitingForAddOperator = true;
 }
 
 
 void Calc::equalSignClicked() {
-    if(!m_waitingForOperator) {
+    if(!m_waitingForAddOperator && !m_waitingForMulOperator) {
         return;
     }
 
@@ -150,13 +149,17 @@ void Calc::equalSignClicked() {
     analysingString();
     m_equalClicked = true;
     m_waitingForOperand = true;
-    m_waitingForOperator = true;
+    m_waitingForAddOperator = true;
+    m_waitingForMulOperator = true;
     m_analysedExpression.clear();
 }
 
 
 void Calc::analysingString() {
     QString expression = expressionDisplay->text();
+    if(expression[0] == '-') {
+        expression = "0" + expression;
+    }
     for(int i=0; i<expression.length(); i++) {
         if(expression[i].isDigit() || expression[i] == '.') {
             m_analysedExpression.push_back(expression[i]);
@@ -170,10 +173,10 @@ void Calc::analysingString() {
             }
             m_operators.pop();
         } else if(!m_operators.isEmpty() && operationPriority(expression.at(i)) > operationPriority(m_operators.top())) {
-            if(expression.at(i) == '-' && expression.at(i - 1) == '(') {
-                m_analysedExpression.push_back(' ');
+            if(expression.at(i - 1) == '(') {
                 m_analysedExpression.push_back('0');
                 m_analysedExpression.push_back(' ');
+                m_operators.push(expression.at(i));
             } else {
                 m_analysedExpression.push_back(' ');
                 m_operators.push(expression.at(i));
@@ -218,6 +221,12 @@ void Calc::calculate() {
             }
         } else if (m_analysedExpression[i] == '/') {
             if(!m_result.isEmpty()) {
+                if(m_result.top() == 0.0) {
+                    cancelButtonClicked();
+                    expressionDisplay->setText("Division by zero is not allowed.");
+                    return;
+
+                } else
                 m_result.push_back(1/m_result.pop()*m_result.pop());
             }
         }
@@ -246,7 +255,6 @@ void Calc::containsEqualSign(QString &clickedOperator) {
         expressionDisplay->setText(expressionDisplay->text() + clickedOperator);
     }
 }
-
 
 void Calc::keyPressEvent(QKeyEvent *event) {
     switch (event->key()) {
@@ -301,7 +309,7 @@ void Calc::keyPressEvent(QKeyEvent *event) {
         case Qt::Key_Asterisk:
         case Qt::Key_Slash:
             m_clickedOperator = event->text();
-            operatorClickedEvent();
+            operatorClickedEvent(m_clickedOperator);
             break;
         default:
             event->ignore();
@@ -313,7 +321,8 @@ void Calc::cancelButtonClicked() {
     display->setText("0");
     expressionDisplay->setText("0");
     m_waitingForOperand = true;
-    m_waitingForOperator = true;
+    m_waitingForAddOperator = true;
+    m_waitingForMulOperator = true;
     m_equalClicked = false;
     m_result.clear();
     m_operators.clear();
