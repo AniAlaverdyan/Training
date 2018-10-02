@@ -38,7 +38,7 @@ private:
     bool m_waitingForAddOperator;
     bool m_waitingForMulOperator;
 
-    int m_clickedValue;
+    int clickedValue;
 
     enum {numButtons = 10};
     Button *numberButtons[numButtons];

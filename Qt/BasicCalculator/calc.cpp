@@ -62,8 +62,8 @@ Calc::Calc(QWidget *parent) :
 
 void Calc::numberClicked() {
     Button *clickedButton = qobject_cast<Button *>(sender());
-    m_clickedValue = clickedButton->text().toInt();
-    buttonClicked(m_clickedValue);
+    clickedValue = clickedButton->text().toInt();
+    buttonClicked(clickedValue);
 }
 
 
@@ -257,47 +257,11 @@ void Calc::containsEqualSign(QString &clickedOperator) {
 }
 
 void Calc::keyPressEvent(QKeyEvent *event) {
+    if(event->text().toInt() >= 0 && event->text().toInt() <= 9) {
+        clickedValue = event->text().toInt();
+        buttonClicked(clickedValue);
+    }
     switch (event->key()) {
-        case Qt::Key_0:
-            m_clickedValue = 0;
-            buttonClicked(m_clickedValue);
-            break;
-        case Qt::Key_1:
-            m_clickedValue = 1;
-            buttonClicked(m_clickedValue);
-            break;
-        case Qt::Key_2:
-            m_clickedValue = 2;
-            buttonClicked(m_clickedValue);
-            break;
-        case Qt::Key_3:
-            m_clickedValue = 3;
-            buttonClicked(m_clickedValue);
-            break;
-        case Qt::Key_4:
-            m_clickedValue = 4;
-            buttonClicked(m_clickedValue);
-            break;
-        case Qt::Key_5:
-            m_clickedValue = 5;
-            buttonClicked(m_clickedValue);
-            break;
-        case Qt::Key_6:
-            m_clickedValue = 6;
-            buttonClicked(m_clickedValue);
-            break;
-        case Qt::Key_7:
-            m_clickedValue = 8;
-            buttonClicked(m_clickedValue);
-            break;
-        case Qt::Key_8:
-            m_clickedValue = 9;
-            buttonClicked(m_clickedValue);
-            break;
-        case Qt::Key_9:
-            m_clickedValue = 10;
-            buttonClicked(m_clickedValue);
-            break;
         case Qt::Key_Period:
             pointClicked();
             break;
