@@ -106,19 +106,19 @@ void Calc::pointClicked() {
 
 void Calc::operatorClicked() {
     Button *clickedButton = qobject_cast<Button *>(sender());
-    m_clickedOperator = clickedButton->text();
-    operatorClickedEvent(m_clickedOperator);
+    clickedOperator = clickedButton->text();
+    operatorClickedEvent(clickedOperator);
 }
 
 
-void Calc::operatorClickedEvent(QString &m_clickedOperator) {
-    if((m_clickedOperator == "*" || m_clickedOperator == "/") && !m_waitingForMulOperator) {
+void Calc::operatorClickedEvent(QString &clickedOperator) {
+    if((clickedOperator == "*" || clickedOperator == "/") && !m_waitingForMulOperator) {
         return;
     }
-    if((m_clickedOperator == "+" || m_clickedOperator == "-") && !m_waitingForAddOperator) {
+    if((clickedOperator == "+" || clickedOperator == "-") && !m_waitingForAddOperator) {
         return;
     }
-    containsEqualSign(m_clickedOperator);
+    containsEqualSign(clickedOperator);
     m_waitingForOperand = true;
     m_waitingForAddOperator = false;
     m_waitingForMulOperator = false;
@@ -272,8 +272,8 @@ void Calc::keyPressEvent(QKeyEvent *event) {
         case Qt::Key_Minus:
         case Qt::Key_Asterisk:
         case Qt::Key_Slash:
-            m_clickedOperator = event->text();
-            operatorClickedEvent(m_clickedOperator);
+            clickedOperator = event->text();
+            operatorClickedEvent(clickedOperator);
             break;
         default:
             event->ignore();

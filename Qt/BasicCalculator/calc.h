@@ -28,7 +28,7 @@ private:
 
     QString m_analysedExpression;
     QString m_numbers;
-    QString m_clickedOperator;
+    QString clickedOperator;
 
     QStack<double> m_result;
     QStack<QString> m_operators;
