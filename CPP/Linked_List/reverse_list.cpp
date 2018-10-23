@@ -64,7 +64,7 @@ void reverse(node *&head)
          next_ptr = temp_ptr -> next;
 	 temp_ptr -> next = prev_ptr;
          prev_ptr = temp_ptr;
-	 temp_ptr = temp_ptr -> next; 
+	 temp_ptr = next_ptr; 
     }
     head = prev_ptr;
         
