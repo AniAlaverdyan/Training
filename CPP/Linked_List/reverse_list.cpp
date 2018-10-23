@@ -2,11 +2,21 @@
 
 struct node
 {
-    int number;  
-    node *next;  
+    private:
+        int number;  
+        node *next;
+    
+    private:
+	bool isEmpty(node *head);
+        void insertFirstElement(node *&head, node *&last, int number);
+
+    public:
+        void insertElement(node *&head, node *&last, int number);
+        void showList(node *current);
+        void reverse(node *&head);
 };
 
-bool isEmpty(node *head)
+bool node::isEmpty(node *head)
 {
     if(head == NULL)
         return true;
@@ -14,7 +24,7 @@ bool isEmpty(node *head)
         return false;
 }
 
-void insertFirstElement(node *&head, node *&last, int number)
+void node::insertFirstElement(node *&head, node *&last, int number)
 {
     node *temp = new node;
     temp -> number = number;
@@ -23,7 +33,7 @@ void insertFirstElement(node *&head, node *&last, int number)
     last = temp;
 }
 
-void insertElement(node *&head, node *&last, int number)
+void node::insertElement(node *&head, node *&last, int number)
 {
     
     if(isEmpty(head))
@@ -38,7 +48,7 @@ void insertElement(node *&head, node *&last, int number)
     }
 }
 
-void showList(node *current)
+void node::showList(node *current)
 {
     if(isEmpty(current))
         std::cout << "The list is empty\n";
@@ -53,7 +63,7 @@ void showList(node *current)
     }
 }
 
-void reverse(node *&head)
+void node::reverse(node *&head)
 {
     struct node *next_ptr = NULL;
     struct node *temp_ptr = head;
