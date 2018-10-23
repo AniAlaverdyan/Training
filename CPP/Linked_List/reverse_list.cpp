@@ -35,7 +35,6 @@ void node::insertFirstElement(node *&head, node *&last, int number)
 
 void node::insertElement(node *&head, node *&last, int number)
 {
-    
     if(isEmpty(head))
         insertFirstElement(head, last, number);
     else
@@ -53,8 +52,7 @@ void node::showList(node *current)
     if(isEmpty(current))
         std::cout << "The list is empty\n";
     else
-    {
-        
+    {        
         while(current != NULL)
         {
             std::cout << current -> number << std::endl;
@@ -76,24 +74,24 @@ void node::reverse(node *&head)
          prev_ptr = temp_ptr;
 	 temp_ptr = next_ptr; 
     }
-    head = prev_ptr;
-        
+    head = prev_ptr;        
 }
 
 int main()
 {
     node *head = NULL;
     node *last = NULL;
-        
-    insertElement(head, last, 1);
-    insertElement(head, last, 2);
-    insertElement(head, last, 3);
-    insertElement(head, last, 4);
+    node list;
+	
+    list.insertElement(head, last, 1);
+    list.insertElement(head, last, 2);
+    list.insertElement(head, last, 3);
+    list.insertElement(head, last, 4);
 
     std::cout << "The initial list is: " << std::endl;
-    showList(head);
-    reverse(head);
+    list.showList(head);
+    list.reverse(head);
     std::cout << "The reversed list is: " << std::endl;
-    showList(head);
+    list.showList(head);
     return 0;
 }
